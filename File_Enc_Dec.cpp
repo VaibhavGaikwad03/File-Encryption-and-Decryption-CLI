@@ -269,7 +269,7 @@ class StartEncDec
         }
     }
 };
-
+ 
 int main()
 {
     StartEncDec start;
