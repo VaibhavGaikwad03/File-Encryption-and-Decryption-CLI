@@ -1,5 +1,5 @@
 This project is used to Encrypt and Decrypt a file using password.
-
+ 
 <div align = "center">
     <h1>FILE ENCRYPTION AND DECRYPTION</h1>
 </div>
