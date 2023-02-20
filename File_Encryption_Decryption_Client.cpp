@@ -12,9 +12,9 @@ int main(void)
 {
     bool bFlag = true;
     int iChoice = 0, iRet = 0;
+    EncryptionDecryption encdec;
     char chChoice = '\0';
     string strFileName, strData, strPass;
-    EncryptionDecryption encdec;
 
     cout << "\nHello Welcome,";
 
@@ -28,7 +28,7 @@ int main(void)
         {
         case 1:
 
-            cout << "Enter a file name to create the file : \n";
+            cout << "\nEnter a file name to create the file : \n";
             cin.ignore();
             getline(cin, strFileName);
 
@@ -72,7 +72,7 @@ int main(void)
 
         case 3:
 
-            cout << "\nEnter the file name to encrypt the data from the file\n";
+            cout << "\nEnter the file name to encrypt the data from the file : \n";
             cin.ignore();
             getline(cin, strFileName);
 
