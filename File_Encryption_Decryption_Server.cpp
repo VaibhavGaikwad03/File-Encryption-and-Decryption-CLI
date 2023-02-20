@@ -76,9 +76,9 @@ int EncryptionDecryption::encrypt_data(const string strFileName)
             write_file(strFileName, m_strCheck + m_strPassword + strLine, 0, 1);
             continue;
         }
-        m_strPassword = "";
         write_file(strFileName, strLine, 1, 1);
     }
+    m_strPassword.clear();
     return 0;
 }
 
