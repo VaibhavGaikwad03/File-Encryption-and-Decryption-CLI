@@ -1,4 +1,11 @@
 #include "FileEncDec.hpp"
+#include <cstdio>
+#include <fstream>
+#define MAXLINES 1000
+using std::ifstream;
+using std::ios;
+using std::ofstream;
+using std::streampos;
 
 EncryptionDecryption::EncryptionDecryption() : m_strCheck("`i^]jn`o"), m_iCountLines(0), m_strPassword("") {}
 
