@@ -1,16 +1,9 @@
 #include <iostream>
-#include <fstream>
 #include <string>
-#include <cstdio>
-#define MAXLINES 1000
 using std::cin;
 using std::cout;
 using std::endl;
 using std::getline;
-using std::ifstream;
-using std::ios;
-using std::ofstream;
-using std::streampos;
 using std::string;
 
 class EncryptionDecryption
