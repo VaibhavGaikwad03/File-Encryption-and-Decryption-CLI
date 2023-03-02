@@ -1,7 +1,7 @@
 #include "customheader.hpp"
 using std::cerr;
 using std::string;
-
+ 
 int main(void)
 {
     bool bFlag = true;
