@@ -1,7 +1,7 @@
-#include "customheader.hpp"
+#include "encdec.hpp"
 using std::cerr;
 using std::string;
- 
+
 int main(void)
 {
     bool bFlag = true;
@@ -70,15 +70,31 @@ int main(void)
             cin.ignore();
             getline(cin, strFileName);
 
-            iRet = encdec.encrypt_data(strFileName);
-
-            if (iRet == -1)
+            if(!encdec.is_exists(strFileName))
             {
                 cerr << "\nERROR : File does not exists!\n";
                 continue;
             }
 
-            if (iRet == -2)
+            
+            cout << "\nPlease set the password (The password should contain strictly eight characters.) : \n";
+            
+            while(strPass.length() != 8)
+            {
+                getline(cin, strPass);
+
+                iRet = encdec.encrypt_data(strFileName, strPass);
+
+                if (iRet == -1)
+                {
+                    cerr << "\nWarning : The password should contain strictly eight characters.\n";
+                    continue;
+                }
+                strPass.clear();
+                break;
+            }
+
+            if (iRet == -3)
             {
                 cerr << "\nERROR : File already encrypted!\n";
                 continue;
@@ -104,6 +120,8 @@ int main(void)
             getline(cin, strPass);
 
             iRet = encdec.decrypt_data(strFileName, strPass);
+
+            strPass.clear();
 
             if (iRet == -2)
             {
