@@ -1,4 +1,4 @@
-#include "customheader.hpp"
+#include "encdec.hpp"
 #include <cstdio>
 #include <fstream>
 #define MAXLINES 1000
@@ -7,7 +7,7 @@ using std::ios;
 using std::ofstream;
 using std::streampos;
 
-EncryptionDecryption::EncryptionDecryption() : m_strCheck("`i^]jn`o"), m_iCountLines(0), m_strPassword("") {}
+EncryptionDecryption::EncryptionDecryption() : m_strCheck("`i^]jn`o"), m_iCountLines(0) {}
 
 int EncryptionDecryption::create_file(const string strFileName)
 {
@@ -53,19 +53,22 @@ int EncryptionDecryption::write_file(const string strFileName, const string strD
     return static_cast<int>(finalpos - currentpos - 1);
 }
 
-int EncryptionDecryption::encrypt_data(const string strFileName)
+int EncryptionDecryption::encrypt_data(const string strFileName, string strPassword)
 {
     int iCnt1 = 0, iCnt2 = 0;
     string *strData = NULL;
     string strLine = "";
 
+    if (strPassword.length() != 8)   //password should contains strictly 8 characters
+        return -1;
+
     if (!is_exists(strFileName))
-        return -1; // file does not exists
+        return -2; // file does not exists
 
     if (check_enc_dec(strFileName))
-        return -2; // file already encrypted
+        return -3; // file already encrypted
 
-    set_password();
+    set_password(strPassword);
 
     strData = read_file(strFileName);
 
@@ -80,12 +83,11 @@ int EncryptionDecryption::encrypt_data(const string strFileName)
 
         if (iCnt1 == 0)
         {
-            write_file(strFileName, m_strCheck + m_strPassword + strLine, 0, 1);
+            write_file(strFileName, m_strCheck + strPassword + strLine, 0, 1);
             continue;
         }
         write_file(strFileName, strLine, 1, 1);
     }
-    m_strPassword.clear();
     return 0;
 }
 
@@ -126,20 +128,16 @@ int EncryptionDecryption::decrypt_data(const string strFileName, const string st
     return 0;
 }
 
-void EncryptionDecryption::set_password()
+string EncryptionDecryption::set_password(string &strPassword)
 {
     int iCnt = 0;
 
-    while (m_strPassword.length() != 8)
-    {
-        cout << "\nPlease set the password (The password should contain strictly eight characters.) : \n";
-        cin >> m_strPassword;
-    }
+    for (iCnt = 0; iCnt < strPassword.length(); iCnt += 2)
+        strPassword[iCnt] += 3;
+    for (iCnt = 1; iCnt < strPassword.length(); iCnt += 2)
+        strPassword[iCnt] -= 3;
 
-    for (iCnt = 0; iCnt < m_strPassword.length(); iCnt += 2)
-        m_strPassword[iCnt] += 3;
-    for (iCnt = 1; iCnt < m_strPassword.length(); iCnt += 2)
-        m_strPassword[iCnt] -= 3;
+    return strPassword;
 }
 
 bool EncryptionDecryption::check_password(const string strFileName, const string strPassword)
